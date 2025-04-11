@@ -1,0 +1,366 @@
+<template>
+    <lightning-card title ="Search By Account">
+  
+        <lightning-layout class="slds-grid">
+            <lightning-layout-item class="slds-col slds-size_1-of-3">
+                <div class="slds-form-element slds-p-around_small">
+                    <label class="slds-form-element__label" for="combobox-id-2" id="combobox-label-id-34">Customer ID</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <input type="text" class="slds-input slds-combobox__input slds-has-focus" value={accNum} onkeyup={accChangeHandler} disabled={disableCustomerID} id="combobox-id-2" aria-autocomplete="list" aria-controls="listbox-id-2" aria-expanded="true" aria-haspopup="listbox" role="combobox" placeholder="Search..."/>
+                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <lightning-icon icon-name="utility:search" size="xx-small" alternative-text="Search" title="Search"></lightning-icon>
+                    </span>
+                    </div>
+                    <template if:true={sizeofaccNumbers}>
+                    <div id="listbox-id-2" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false" onscroll={loadMoreAccount}>
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={accNumbers} for:item="acc">
+                        <li key={acc.Id} role="option" class="slds-listbox__item" >
+                            <div class="slds-media slds-listbox__option slds-listbox__option_plain" onclick={accountSelectedHandler}>
+                                <span class="slds-truncate" title={acc.AccountNumber}  >
+                                    {acc.AccountNumber}
+                                </span>
+                            </div>
+                        </li>
+                    </template>
+                    
+                  
+                    </ul>
+                    </div>
+                </template>
+                <template if:true={showSelectedAccount}>
+                    <div id="listbox-id-3" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false">
+                    <div class="slds-grid slds-align_absolute-center slds-grid_align-spread slds-p-horizontal_small">
+                        <span class="slds-m-right_x-small"><lightning-icon icon-name="standard:account" size="xx-small" alternative-text="Account" title="Account">
+                        </lightning-icon>
+                        </span>
+                    <span class="slds-truncate slds-text-title_caps">{selectedAccount}</span>
+                    <span class="slds-m-left_x-small">
+                        <lightning-icon icon-name="utility:close" onclick={closeAccountList} size="xx-small" alternative-text="Close" title="Close">
+
+                        </lightning-icon>
+                    </span>
+                    </div>
+                    </div>
+                </template>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-col slds-size_1-of-3">
+                <div class="slds-form-element slds-p-around_small">
+                    <label class="slds-form-element__label" for="combobox-id-2" >Customer Name</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <input type="text" class="slds-input slds-combobox__input slds-has-focus" value={accName} disabled={disableCustomerName}  onkeyup={accNameChangeHandler}  aria-autocomplete="list" aria-controls="listbox-id-2" aria-expanded="true" aria-haspopup="listbox" role="combobox" placeholder="Search..."/>
+                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <lightning-icon icon-name="utility:search" size="xx-small" alternative-text="Search" title="Search"></lightning-icon>
+                    </span>
+                    </div>
+                    <template if:true={sizeofaccNames}>
+                    <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false">
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={accNames} for:item="acc">
+                        <li key={acc.Id} role="option" class="slds-listbox__item" >
+                            <div class="slds-media slds-listbox__option slds-listbox__option_plain" onclick={accountNameSelectedHandler}>
+                                <span class="slds-truncate" title={acc.Name}  >
+                                    {acc.Name}
+                                </span>
+                            </div>
+                        </li>
+                    </template>
+                    
+                  
+                    </ul>
+                    </div>
+                </template>
+                <template if:true={showSelectedAccountName}>
+                    <div  class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false">
+                    <div class="slds-grid slds-align_absolute-center slds-grid_align-spread slds-p-horizontal_small">
+                        <span class="slds-m-right_x-small"><lightning-icon icon-name="standard:account" size="xx-small" alternative-text="Account" title="Account">
+                        </lightning-icon>
+                        </span>
+                    <span class="slds-truncate slds-text-title_caps">{selectedAccountName}</span>
+                    <span class="slds-m-left_x-small">
+                        <lightning-icon icon-name="utility:close" onclick={closeAccountNameList} size="xx-small" alternative-text="Close" title="Close">
+
+                        </lightning-icon>
+                    </span>
+                    </div>
+                    </div>
+                </template>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-col slds-size_1-of-3">
+                <div class="slds-form-element slds-p-around_small"> <!-- Added slds-p-around_small -->
+                    <label class="slds-form-element__label" for="combobox-id-2" id="combobox-label-id-28">
+                        Select Team Instance
+                    </label>
+                
+                    <div class="slds-form-element__control">
+                        <div class="slds-combobox_container"> <!-- Removed slds-size_small -->
+                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                                
+                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none" onclick={showTeamInstanceHandler}>
+                                    <div role="combobox" 
+                                         tabindex="0" 
+                                         class="slds-input_faux slds-combobox__input slds-has-focus" 
+                                         aria-labelledby="combobox-label-id-28" 
+                                         id="combobox-id-2-selected-value" 
+                                         aria-controls="listbox-id-2" 
+                                         aria-expanded="true" 
+                                         aria-haspopup="listbox">
+                                        <span class="slds-truncate" id="combobox-value-id-28">
+                                            Select an Option…
+                                        </span>
+                                    </div>
+            
+                                    <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                        <lightning-icon icon-name="standard:team_member" 
+                                                        size="xx-small" 
+                                                        alternative-text="Search" 
+                                                        title="Search">
+                                        </lightning-icon>
+                                    </span>
+                                </div>
+            
+                                <template if:true={showTeamInstance}>
+                                    <div id="listbox-id-4" 
+                                         class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" 
+                                         role="listbox"  
+                                         tabindex="0" 
+                                         aria-busy="false">
+                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                            <template for:each={teamInstances} for:item="ti">
+                                                <li key={ti.Id} role="presentation" class="slds-listbox__item" onclick={teamInstanceSelectedHandler}>
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-truncate" title={ti.Name}>
+                                                                {ti.Name}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
+            
+                                <template if:true={selectedTeamInstance}>
+                                    <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false">
+                                        <div class="slds-grid slds-align_absolute-center slds-grid_align-spread slds-p-horizontal_small">
+                                            <span class="slds-m-right_x-small">
+                                                <lightning-icon icon-name="standard:account" size="xx-small" alternative-text="Team Instance" title="Team Instance">
+                                                </lightning-icon>
+                                            </span>
+                                            <span class="slds-truncate slds-text-title_caps">{selectedTeamInstance}</span>
+                                            <span class="slds-m-left_x-small">
+                                                <lightning-icon icon-name="utility:close" onclick={closeteamInstanceList} size="xx-small" alternative-text="Close" title="Close">
+                                                </lightning-icon>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </lightning-layout-item>
+            
+
+
+    </lightning-layout>
+
+<!-- BUTTON CONTAINER (Next Line & Centered) -->
+<lightning-layout class="slds-grid slds-grid_align-center slds-p-top_medium">
+    
+    <lightning-layout-item class="slds-col slds-size_1-of-3">
+        <div class="slds-flex slds-grid slds-grid_align-center slds-p-around_medium">
+            <!-- SEARCH BUTTON -->
+            <lightning-button label="Search" onclick={performSearch} variant="brand" class="slds-m-right_medium"></lightning-button> 
+
+            <!-- CLEAR SEARCH BUTTON -->
+            <lightning-button label="Clear Search" onclick={performClearSearch} variant="neutral"></lightning-button> 
+        </div>
+    </lightning-layout-item>
+
+</lightning-layout>
+
+
+    <template if:true ={showAlignmentResults}>
+
+        <div style="height: 300px;" class="slds-p-around_small">
+            <lightning-button label="Download" onclick={downloadCSV}></lightning-button>
+            <lightning-datatable
+                    key-field="Id"
+                    data={records}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                    enable-infinite-loading
+                    onloadmore={loadMoreData}
+                    hide-checkbox-column="false"
+                    show-row-number-column = "true" >
+            </lightning-datatable>
+            </div>
+            
+            <template if:true={showdetails}>
+                <!-- modal start -->
+               <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+               <div class="slds-modal__container">
+                <!-- modal header start -->
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                        <lightning-icon icon-name="utility:close"
+                           alternative-text="close"
+                           variant="inverse"
+                           size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate"><b>Showing details for Account: {finalaccountnumber} and Position: {finalPosition} </b></h2>
+                  </header>
+              
+                  <!-- modal body start -->
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <template if:true={results} >
+                           <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                               <thead>
+                                   <tr class="slds-text-title_caps">
+                                       <th scope="col">Label</th>
+                                       <th scope="col">Value</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <template if:true={results} >
+                                       <tr ><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Id</td><td>{results.Id}</td></tr>
+                                       <tr ><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Active</td><td>{results.AxtriaSalesIQTM__Active__c}</td></tr>
+                                       <tr ><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Fipit</td><td>{results.FIPIT_Flag__c}</td></tr>
+                                       <tr ><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Customer Type</td><td>{results.Customer_Sub_Type__c}</td></tr>
+                                   </template>
+                                   <template if:true={Prresponse}>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Product Restricted</td><td>{Prresponse}</td></tr>
+                                   </template>
+                                   <template if:true={cmResponse}>
+                                       <template if:true={isTeamEverest}>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Is Segmented</td><td>{cmResponse.is_segmented__c}</td></tr>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">MCAL</td><td>{cmResponse.mcal_flag__c}</td></tr>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Everest Sales</td><td>{cmResponse.trx_everest__c}</td></tr>
+                                       </template>
+           
+                                       <template if:true={isTeamAlpine}>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Is Segmented </td><td>{cmResponse.is_segmented__c}</td></tr>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">MCAL</td><td>{cmResponse.mcal_flag__c}</td></tr>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">Alpine Sales</td><td>{cmResponse.trx_alpine__c}</td></tr>
+                                       <tr><td class="slds-text-title_caps slds-text-bold slds-theme_shade">DE Flag</td><td>{cmResponse.DE_Flag__c}</td></tr>
+                                       </template>
+           
+                                   </template>
+                               </tbody>
+                           </table>
+                        </template>
+           
+                           
+                           
+                       
+                           
+                       
+                       <br>
+                       <p class="slds-col slds-size_12-of-12 slds-align_absolute-center slds-text-bold slds-theme_shade"><b>ADDRESS DETAILS</b></p>
+                       <br>
+                       <template if:true={Addressresponse}>
+                           <lightning-datatable key-field="Id" columns = {columns1} data={Addressresponse} hide-checkbox-column="true" ></lightning-datatable>  
+                       </template>
+                  </div>
+           
+                  <!-- modal footer start-->
+                  <footer class="slds-modal__footer">
+                     <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                  </footer>
+               
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+           
+                       
+           
+                       
+                      
+        </template>  
+        </template>
+
+    </lightning-card>
+
+
+
+
+    <lightning-card title ="Search By Zip">
+        <lightning-layout class="slds-grid">
+            <lightning-layout-item class="slds-col slds-size_1-of-3">
+                <div class="slds-form-element slds-p-around_small">
+                    <label class="slds-form-element__label" for="combobox-id-2" id="zip-code-combobox">Zip Code</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <input type="text" class="slds-input slds-combobox__input slds-has-focus" value={zipCode} onkeyup={zipChangeHandler}  aria-autocomplete="list" aria-controls="listbox-id-2" aria-expanded="true" aria-haspopup="listbox" role="combobox" placeholder="Search..."/>
+                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <lightning-icon icon-name="utility:search" size="xx-small" alternative-text="Search" title="Search"></lightning-icon>
+                    </span>
+                    </div>
+                    <template if:true={sizeofaccNumbers}>
+                    <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false" onscroll={loadMoreAccount}>
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                    <template for:each={accNumbers} for:item="acc">
+                        <li key={acc.Id} role="option" class="slds-listbox__item" >
+                            <div class="slds-media slds-listbox__option slds-listbox__option_plain" onclick={accountSelectedHandler}>
+                                <span class="slds-truncate" title={acc.AccountNumber}  >
+                                    {acc.AccountNumber}
+                                </span>
+                            </div>
+                        </li>
+                    </template>
+                    
+                  
+                    </ul>
+                    </div>
+                </template>
+                <template if:true={showSelectedAccount}>
+                    <div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" aria-busy="false">
+                    <div class="slds-grid slds-align_absolute-center slds-grid_align-spread slds-p-horizontal_small">
+                        <span class="slds-m-right_x-small"><lightning-icon icon-name="standard:account" size="xx-small" alternative-text="Account" title="Account">
+                        </lightning-icon>
+                        </span>
+                    <span class="slds-truncate slds-text-title_caps">{selectedAccount}</span>
+                    <span class="slds-m-left_x-small">
+                        <lightning-icon icon-name="utility:close" onclick={closeAccountList} size="xx-small" alternative-text="Close" title="Close">
+
+                        </lightning-icon>
+                    </span>
+                    </div>
+                    </div>
+                </template>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+
+            </lightning-layout-item></lightning-layout>
+    </lightning-card>
+</template>

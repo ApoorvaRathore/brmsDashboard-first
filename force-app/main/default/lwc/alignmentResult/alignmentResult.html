@@ -1,0 +1,16 @@
+<template>
+<lightning-card title ="Table">
+    <div style="height: 300px;" class="slds-p-around_small">
+
+        <lightning-datatable
+                key-field="id"
+                data={records}
+                columns={columns}
+                onrowaction={handleRowAction}
+                enable-infinite-loading
+            onloadmore={loadMoreData}>
+
+        </lightning-datatable>
+    </div>
+</lightning-card>
+</template>
